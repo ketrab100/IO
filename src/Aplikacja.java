@@ -6,23 +6,23 @@ public class Aplikacja {
     ArrayList<Klient> klienci;
     ArrayList<Manager> managerowie;
     Sesja sesja;
+
     public Aplikacja(){
         hotele = new ArrayList<>();
         klienci = new ArrayList<>();
         managerowie = new ArrayList<>();
     }
-    public void zaloguj(String login, String haslo, int type) {
-        if (type == 1) {
+    public void zaloguj(String login, String haslo, UserType type) {
+        if (type == UserType.KLIENT) {
             var klient = klienci.stream().filter(k -> login.equals(k.login) && haslo.equals(k.haslo)).findAny();
             if (klient.isEmpty()) {
                 System.out.println("blad");
             } else {
-                System.out.println("Witaj !");
-                System.out.print(klient.get().nazwisko + " ");
-                System.out.println(klient.get().imie);
+                sesja = new SesjaKlienta(klient.get());
+                sesja.start();
             }
         }
-        if (type == 2){
+        if (type == UserType.PRACOWNIK){
             Optional<Pracownik> pracownik;
             for (var h: hotele) {
                 pracownik = h.pracownicy.stream().filter(p-> login.equals(p.login) && haslo.equals(p.haslo)).findAny();
@@ -33,7 +33,7 @@ public class Aplikacja {
                 }
             }
         }
-        if (type == 3){
+        if (type == UserType.MANAGER){
             var manager = managerowie.stream().filter(m -> login.equals(m.login) && haslo.equals(m.haslo)).findAny();
             if (!manager.isEmpty()){
                 System.out.println("Witaj !");
@@ -41,8 +41,9 @@ public class Aplikacja {
                 System.out.println(manager.get().imie);
             }
         }
-
-
+    }
+    public void zarzadzanieSesja(){
+        sesja.start();
     }
     public void init(){
         Klient klient = new Klient();
