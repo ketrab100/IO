@@ -4,5 +4,8 @@ public class Sesja {
     }
     void wyloguj(){
 
-    };
+    }
+    void start(){
+        System.out.println("Witaj !");
+    }
 }
