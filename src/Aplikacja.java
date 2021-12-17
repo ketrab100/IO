@@ -18,7 +18,7 @@ public class Aplikacja {
             if (klient.isEmpty()) {
                 System.out.println("blad");
             } else {
-                sesja = new SesjaKlienta(klient.get());
+                sesja = new SesjaKlienta(klient.get(),hotele);
                 sesja.start();
             }
         }
@@ -53,5 +53,8 @@ public class Aplikacja {
         klient.imie = "Bartlomiej";
         klient.nazwisko = "Sawicki";
         klienci.add(klient);
+        Hotel hotel = new Hotel();
+        hotel.nazwa = "Super hotel";
+        hotele.add(hotel);
     }
 }
