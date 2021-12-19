@@ -1,4 +1,7 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 public class Aplikacja {
@@ -53,8 +56,25 @@ public class Aplikacja {
         klient.imie = "Bartlomiej";
         klient.nazwisko = "Sawicki";
         klienci.add(klient);
+
         Hotel hotel = new Hotel();
         hotel.nazwa = "Super hotel";
+
+
+        Pokoj pokoj = new Pokoj();
+        pokoj.numer = 10;
+
+        Rezerwacja rezerwacja = new Rezerwacja();
+        rezerwacja.stan = "zarezerwowane";
+        try {
+            rezerwacja.poczatek = new SimpleDateFormat("dd.MM.yyyy").parse("13.12.2021");
+            rezerwacja.koniec = new SimpleDateFormat("dd.MM.yyyy").parse("15.12.2021");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        pokoj.addRezerwacja(rezerwacja,klient);
+
+        hotel.pokoje.add(pokoj);
         hotele.add(hotel);
     }
 }

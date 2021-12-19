@@ -6,7 +6,7 @@ public class Hotel {
     Adres adres;
     int iloscPokoi;
     int iloscPracownikow;
-    ArrayList<Pokoj> pokoje;
+    ArrayList<Pokoj> pokoje = new ArrayList<>();
     ArrayList<Pracownik> pracownicy;
 
 }
