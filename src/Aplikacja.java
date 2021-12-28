@@ -65,7 +65,7 @@ public class Aplikacja {
         pokoj.numer = 10;
 
         Rezerwacja rezerwacja = new Rezerwacja();
-        rezerwacja.stan = "zarezerwowane";
+        rezerwacja.stan = RezerwationStates.Zarezerwowane;
         try {
             rezerwacja.poczatek = new SimpleDateFormat("dd.MM.yyyy").parse("13.12.2021");
             rezerwacja.koniec = new SimpleDateFormat("dd.MM.yyyy").parse("15.12.2021");

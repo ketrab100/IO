@@ -5,11 +5,18 @@ public class Rezerwacja{
     int id;
     Date poczatek;
     Date koniec;
-    String stan;
+    RezerwationStates stan;
     Klient klient;
     public Rezerwacja(){
         id = nextId;
         nextId++;
     }
+}
+
+enum RezerwationStates{
+    Wolne,
+    Zarezerwowane,
+    OczekiwanieNaPotwierdzenie,
+    OczekiwanieNaAnulowanie
 }
 
