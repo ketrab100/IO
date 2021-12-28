@@ -2,7 +2,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class SesjaKlienta extends Sesja {
@@ -31,13 +30,13 @@ public class SesjaKlienta extends Sesja {
             choice = keyboard.next();
 
             if (choice.equals("1")) {
-                this.zarezerwowaniePokoju();
+                zarezerwowaniePokoju();
             }
             if (choice.equals("2")) {
                 anulowanieRezerwacji();
             }
             if(choice.equals("3")){
-                changeRezerwation();
+                zamianaTerminuRezerwacji();
             }
             if(choice.equals("4")){
                 showRezerwations();
@@ -80,10 +79,10 @@ public class SesjaKlienta extends Sesja {
         for (int i =0;i<klient.rezerwacje.size();i++){
             System.out.print(i +".");
             System.out.print(klient.rezerwacje.get(i).poczatek.toString() + " - ");
-            System.out.print(klient.rezerwacje.get(i).poczatek.toString());
+            System.out.println(klient.rezerwacje.get(i).poczatek.toString());
         }
     }
-    void changeRezerwation(){
+    void zamianaTerminuRezerwacji(){
         Rezerwacja oldRezerwation = askAboutReserwation();
         Rezerwacja newRezerwation = askAboutDates();
         if (newRezerwation==null){
@@ -115,7 +114,7 @@ public class SesjaKlienta extends Sesja {
         for(Pokoj p : hotel.pokoje){
             System.out.println("Pokoj numer: "+p.numer);
             for(Rezerwacja r : p.rezerwacje){
-                if(r.stan == "zarezerwowane"){
+                if(r.stan == RezerwationStates.Zarezerwowane){
                     System.out.println(r.poczatek + " " + r.koniec + "zarezerwowane");
                 }
             }
@@ -166,7 +165,7 @@ public class SesjaKlienta extends Sesja {
             rezerwacja.klient = klient;
             rezerwacja.poczatek = start;
             rezerwacja.koniec = end;
-            rezerwacja.stan = "rezerwacja";
+            rezerwacja.stan = RezerwationStates.OczekiwanieNaPotwierdzenie;
             return rezerwacja;
         }
         return null;
