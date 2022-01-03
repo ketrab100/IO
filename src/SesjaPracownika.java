@@ -16,7 +16,7 @@ public class SesjaPracownika {
             System.out.println("Prosze wybrac opcje z listy:");
             System.out.println("1. Potwierdzenie rezerwacji");
             System.out.println("2. Odrzucenie rezerwacji");
-            System.out.println("3. Pokarz wszystkie rezerwacje");
+            System.out.println("3. Pokaz wszystkie rezerwacje");
             System.out.println("4. Wyloguj");
 
             String choice = "0";

@@ -21,7 +21,7 @@ public class SesjaKlienta extends Sesja {
             System.out.println("1. Zarezerowanie pokoju");
             System.out.println("2. Anulowoanie rezerwacji");
             System.out.println("3. Zmiana terminu rezerwacji");
-            System.out.println("4. Powaz wszystkie rezerwacje");
+            System.out.println("4. Pokaz wszystkie rezerwacje");
             System.out.println("5. Pokaz stan pokoi w hotelu");
             System.out.println("6. Wyloguj");
             String choice = "0";
