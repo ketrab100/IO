@@ -1,12 +1,10 @@
 import java.util.ArrayList;
 
 public class Hotel {
-    static int nextId;
+    static int nextId = 1;
     int id;
     String nazwa;
     Adres adres;
-    int iloscPokoi;
-    int iloscPracownikow;
     ArrayList<Pokoj> pokoje = new ArrayList<>();
     ArrayList<Pracownik> pracownicy;
     public Hotel(){
@@ -16,9 +14,9 @@ public class Hotel {
     @Override
     public String toString(){
         String s = "";
-        s+= this.id + "     ";
-        s+= this.nazwa + "      ";
+        s+= this.id + " ";
+        s+= this.nazwa + " ";
         s+= this.adres.toString();
-        return null;
+        return s;
     }
 }
