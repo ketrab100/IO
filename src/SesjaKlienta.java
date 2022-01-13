@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class SesjaKlienta extends Sesja {
-    Klient klient;
-    ArrayList<Hotel> hotele;
+    private Klient klient;
+    private ArrayList<Hotel> hotele;
 
     public SesjaKlienta(Klient klient, ArrayList<Hotel> hotele) {
         this.klient = klient;
@@ -14,8 +14,8 @@ public class SesjaKlienta extends Sesja {
     }
     void start() {
         while (true) {
-            System.out.print(this.klient.nazwisko + " ");
-            System.out.println(this.klient.imie);
+            System.out.print(this.klient.getNazwisko() + " ");
+            System.out.println(this.klient.getImie());
 
             System.out.println("Prosze wybrac opcje z listy:");
             System.out.println("1. Zarezerowanie pokoju");
@@ -68,18 +68,18 @@ public class SesjaKlienta extends Sesja {
     }
     void anulowanieRezerwacji(){
         Rezerwacja rezerwacja = askAboutReserwation();
-        klient.rezerwacje.remove(rezerwacja);
+        klient.getRezerwacje().remove(rezerwacja);
         for (Hotel h : hotele){
-            for(Pokoj p : h.pokoje){
-                p.rezerwacje.remove(rezerwacja);
+            for(Pokoj p : h.getPokoje()){
+                p.getRezerwacje().remove(rezerwacja);
             }
         }
     }
     void showRezerwations(){
-        for (int i =0;i<klient.rezerwacje.size();i++){
+        for (int i =0;i<klient.getRezerwacje().size();i++){
             System.out.print(i +".");
-            System.out.print(klient.rezerwacje.get(i).poczatek.toString() + " - ");
-            System.out.println(klient.rezerwacje.get(i).poczatek.toString());
+            System.out.print(klient.getRezerwacje().get(i).getPoczatek().toString() + " - ");
+            System.out.println(klient.getRezerwacje().get(i).getKoniec().toString());
         }
     }
     void zamianaTerminuRezerwacji(){
@@ -91,9 +91,9 @@ public class SesjaKlienta extends Sesja {
         }
         Pokoj pokoj = null;
         for (Hotel h : hotele){
-            for(Pokoj p : h.pokoje){
-                for(Rezerwacja r : p.rezerwacje){
-                    if(r.id == oldRezerwation.id){
+            for(Pokoj p : h.getPokoje()){
+                for(Rezerwacja r : p.getRezerwacje()){
+                    if(r.getId() == oldRezerwation.getId()){
                         pokoj = p;
                     }
                 }
@@ -111,11 +111,11 @@ public class SesjaKlienta extends Sesja {
     }
     void showRezerwationsInHotel(){
         Hotel hotel = askAboutHotel();
-        for(Pokoj p : hotel.pokoje){
-            System.out.println("Pokoj numer: "+p.numer);
-            for(Rezerwacja r : p.rezerwacje){
-                if(r.stan == RezerwationStates.Zarezerwowane){
-                    System.out.println(r.poczatek + " " + r.koniec + "zarezerwowane");
+        for(Pokoj p : hotel.getPokoje()){
+            System.out.println("Pokoj numer: "+p.getNumer());
+            for(Rezerwacja r : p.getRezerwacje()){
+                if(r.getStan() == RezerwationStates.Zarezerwowane){
+                    System.out.println(r.getPoczatek() + " " + r.getKoniec() + "zarezerwowane");
                 }
             }
         }
@@ -124,7 +124,7 @@ public class SesjaKlienta extends Sesja {
         System.out.println("Prosze wybrac hotel z listy:");
         for(int i =1;i<=hotele.size();i++) {
             System.out.print(i+". ");
-            System.out.println(hotele.get(i-1).nazwa);
+            System.out.println(hotele.get(i-1).getNazwa());
         }
         String choice = "0";
         Scanner keyboard = new Scanner(System.in);
@@ -134,14 +134,14 @@ public class SesjaKlienta extends Sesja {
     }
     Pokoj askAboutRoom(Hotel hotel){
         System.out.println("Prosze wybrac pokoj z listy:");
-        for(int i =1;i<=hotel.pokoje.size();i++) {
+        for(int i =1;i<=hotel.getPokoje().size();i++) {
             System.out.print(i+". ");
-            System.out.println("Pokoj numer " + hotel.pokoje.get(i-1).numer);
+            System.out.println("Pokoj numer " + hotel.getPokoje().get(i-1).getNumer());
         }
         String choice = "0";
         Scanner keyboard = new Scanner(System.in);
         choice = keyboard.nextLine();
-        Pokoj pokoj = hotel.pokoje.get(Integer.parseInt(choice)-1);
+        Pokoj pokoj = hotel.getPokoje().get(Integer.parseInt(choice)-1);
         return pokoj;
     }
     Rezerwacja askAboutDates(){
@@ -162,10 +162,10 @@ public class SesjaKlienta extends Sesja {
 
         if(start != null && end != null) {
             Rezerwacja rezerwacja = new Rezerwacja();
-            rezerwacja.klient = klient;
-            rezerwacja.poczatek = start;
-            rezerwacja.koniec = end;
-            rezerwacja.stan = RezerwationStates.OczekiwanieNaPotwierdzenie;
+            rezerwacja.setKlient(klient);
+            rezerwacja.setPoczatek(start);
+            rezerwacja.setKoniec(end);
+            rezerwacja.setStan(RezerwationStates.OczekiwanieNaPotwierdzenie);
             return rezerwacja;
         }
         return null;
@@ -174,7 +174,7 @@ public class SesjaKlienta extends Sesja {
         showRezerwations();
         String choice = "0";
         Scanner keyboard = new Scanner(System.in);
-        Rezerwacja rezerwacja = klient.rezerwacje.get(Integer.parseInt(choice));
+        Rezerwacja rezerwacja = klient.getRezerwacje().get(Integer.parseInt(choice));
         return rezerwacja;
     }
 }

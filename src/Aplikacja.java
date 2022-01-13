@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.Optional;
 
 public class Aplikacja {
-    ArrayList<Hotel> hotele;
-    ArrayList<Klient> klienci;
-    ArrayList<Manager> managerowie;
-    Sesja sesja;
+    private ArrayList<Hotel> hotele;
+    private ArrayList<Klient> klienci;
+    private ArrayList<Manager> managerowie;
+    private Sesja sesja;
 
     public Aplikacja(){
         hotele = new ArrayList<>();
@@ -17,7 +17,7 @@ public class Aplikacja {
     }
     public void zaloguj(String login, String haslo, UserType type) {
         if (type == UserType.KLIENT) {
-            var klient = klienci.stream().filter(k -> login.equals(k.login) && haslo.equals(k.haslo)).findAny();
+            var klient = klienci.stream().filter(k -> login.equals(k.getLogin()) && haslo.equals(k.getHaslo())).findAny();
             if (klient.isEmpty()) {
                 System.out.println("blad");
             } else {
@@ -28,20 +28,20 @@ public class Aplikacja {
         if (type == UserType.PRACOWNIK){
             Optional<Pracownik> pracownik;
             for (var h: hotele) {
-                pracownik = h.pracownicy.stream().filter(p-> login.equals(p.login) && haslo.equals(p.haslo)).findAny();
+                pracownik = h.getPracownicy().stream().filter(p-> login.equals(p.getLogin()) && haslo.equals(p.getHaslo())).findAny();
                 if(!pracownik.isEmpty()) {
                     System.out.println("Witaj !");
-                    System.out.print(pracownik.get().nazwisko + " ");
-                    System.out.println(pracownik.get().imie);
+                    System.out.print(pracownik.get().getNazwisko() + " ");
+                    System.out.println(pracownik.get().getImie());
                 }
             }
         }
         if (type == UserType.MANAGER){
-            var manager = managerowie.stream().filter(m -> login.equals(m.login) && haslo.equals(m.haslo)).findAny();
+            var manager = managerowie.stream().filter(m -> login.equals(m.getLogin()) && haslo.equals(m.getHaslo())).findAny();
             if (!manager.isEmpty()){
                 System.out.println("Witaj !");
-                System.out.print(manager.get().nazwisko + " ");
-                System.out.println(manager.get().imie);
+                System.out.print(manager.get().getNazwisko() + " ");
+                System.out.println(manager.get().getImie());
             }
         }
     }
@@ -50,31 +50,31 @@ public class Aplikacja {
     }
     public void init(){
         Klient klient = new Klient();
-        klient.haslo = "123";
-        klient.id = 1;
-        klient.login = "elo";
-        klient.imie = "Bartlomiej";
-        klient.nazwisko = "Sawicki";
+        klient.setHaslo("123");
+        klient.setId(1);
+        klient.setLogin("elo");
+        klient.setImie("Bartlomiej");
+        klient.setNazwisko("Sawicki");
         klienci.add(klient);
 
         Hotel hotel = new Hotel();
-        hotel.nazwa = "Super hotel";
+        hotel.setNazwa("Super hotel");
 
 
         Pokoj pokoj = new Pokoj();
-        pokoj.numer = 10;
+        pokoj.setNumer(10);
 
         Rezerwacja rezerwacja = new Rezerwacja();
-        rezerwacja.stan = RezerwationStates.Zarezerwowane;
+        rezerwacja.setStan(RezerwationStates.Zarezerwowane);
         try {
-            rezerwacja.poczatek = new SimpleDateFormat("dd.MM.yyyy").parse("13.12.2021");
-            rezerwacja.koniec = new SimpleDateFormat("dd.MM.yyyy").parse("15.12.2021");
+            rezerwacja.setPoczatek(new SimpleDateFormat("dd.MM.yyyy").parse("13.12.2021"));
+            rezerwacja.setKoniec(new SimpleDateFormat("dd.MM.yyyy").parse("15.12.2021"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
         pokoj.addRezerwacja(rezerwacja,klient);
 
-        hotel.pokoje.add(pokoj);
+        hotel.getPokoje().add(pokoj);
         hotele.add(hotel);
     }
 }

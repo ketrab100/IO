@@ -3,16 +3,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SesjaManagera extends Sesja {
-    Manager manager;
-    ArrayList<Hotel> hotele;
+    private Manager manager;
+    private ArrayList<Hotel> hotele;
     public SesjaManagera(Manager manager, ArrayList<Hotel> hotele) {
         this.manager = manager;
         this.hotele = hotele;
     }
     void start(){
         while(true) {
-            System.out.print(this.manager.imie+" ");
-            System.out.println(this.manager.nazwisko);
+            System.out.print(this.manager.getImie()+" ");
+            System.out.println(this.manager.getNazwisko());
             System.out.println("Prosze wybrac opcje z listy:");
             System.out.println("1. Dodanie nowego hotelu");
             System.out.println("2. Usuniecie hotelu z listy");
@@ -44,20 +44,20 @@ public class SesjaManagera extends Sesja {
     void addHotel(){
         Adres adres = askAboutAddress();
         Hotel hotel = new Hotel();
-        hotel.adres = adres;
+        hotel.setAdres(adres);
         while (askAboutRooms(hotel));
         hotele.add(hotel);
     }
     Pokoj askAboutRoom(Hotel hotel){
         System.out.println("Prosze wybrac pokoj z listy:");
-        for(int i =1;i<=hotel.pokoje.size();i++) {
+        for(int i =1;i<=hotel.getPokoje().size();i++) {
             System.out.print(i+". ");
-            System.out.println("Pokoj numer " + hotel.pokoje.get(i-1).numer);
+            System.out.println("Pokoj numer " + hotel.getPokoje().get(i-1).getNumer());
         }
         String choice = "0";
         Scanner keyboard = new Scanner(System.in);
         choice = keyboard.nextLine();
-        Pokoj pokoj = hotel.pokoje.get(Integer.parseInt(choice)-1);
+        Pokoj pokoj = hotel.getPokoje().get(Integer.parseInt(choice)-1);
         return pokoj;
     }
     Pokoj askAboutNewRoom(){
@@ -66,13 +66,13 @@ public class SesjaManagera extends Sesja {
         Pokoj pokoj = new Pokoj();
         System.out.println("Podaj numer pokoju:");
         choice = keyboard.nextLine();
-        pokoj.numer = Integer.parseInt(choice);
+        pokoj.setNumer(Integer.parseInt(choice));
         System.out.println("Podaj cene:");
         choice = keyboard.nextLine();
-        pokoj.cena = Integer.parseInt(choice);
+        pokoj.setCena(Integer.parseInt(choice));
         System.out.println("Podaj ilosc miejsc");
         choice = keyboard.nextLine();
-        pokoj.iloscMiejsc = Integer.parseInt(choice);
+        pokoj.setIloscMiejsc(Integer.parseInt(choice));
         return pokoj;
     }
     Adres askAboutAddress(){
@@ -81,16 +81,16 @@ public class SesjaManagera extends Sesja {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Prosze podac nazwe ulicy: ");
         input = keyboard.nextLine();
-        adres.ulica = input;
+        adres.setUlica(input);
         System.out.println("Prosze podac numer budynku: ");
         input = keyboard.nextLine();
-        adres.numerBudynku = Integer.parseInt(input);
+        adres.setNumerBudynku(Integer.parseInt(input));
         System.out.println("Prosze podac miasto: ");
         input = keyboard.nextLine();
-        adres.miasto = input;
+        adres.setMiasto(input);
         System.out.println("Prosze podac kod pocztowy: ");
         input = keyboard.nextLine();
-        adres.kodPocztowy = input;
+        adres.setKodPocztowy(input);
         return adres;
     }
     boolean askAboutRooms(Hotel hotel){
@@ -107,14 +107,14 @@ public class SesjaManagera extends Sesja {
             Pokoj pokoj = new Pokoj();
             System.out.println("Podaj numer pokoju:");
             choice = keyboard.nextLine();
-            pokoj.numer = Integer.parseInt(choice);
+            pokoj.setNumer(Integer.parseInt(choice));
             System.out.println("Podaj cene:");
             choice = keyboard.nextLine();
-            pokoj.cena = Integer.parseInt(choice);
+            pokoj.setCena(Integer.parseInt(choice));
             System.out.println("Podaj ilosc miejsc");
             choice = keyboard.nextLine();
-            pokoj.iloscMiejsc = Integer.parseInt(choice);
-            hotel.pokoje.add(pokoj);
+            pokoj.setIloscMiejsc(Integer.parseInt(choice));
+            hotel.getPokoje().add(pokoj);
         }
         return true;
     }
@@ -131,7 +131,7 @@ public class SesjaManagera extends Sesja {
         System.out.println("Prosze wybrac hotel z listy:");
         for(int i =1;i<=hotele.size();i++) {
             System.out.print(i+". ");
-            System.out.println(hotele.get(i-1).nazwa);
+            System.out.println(hotele.get(i-1).getNazwa());
         }
         String choice = "0";
         Scanner keyboard = new Scanner(System.in);
@@ -151,11 +151,11 @@ public class SesjaManagera extends Sesja {
         choice = keyboard.nextLine();
         if(choice.equals("1")){
             Adres adres = askAboutAddress();
-            hotel.adres = adres;
+            hotel.setAdres(adres);
         }
         if (choice.equals("2")){
             Pokoj pokoj = askAboutRoom(hotel);
-            hotel.pokoje.remove(pokoj);
+            hotel.getPokoje().remove(pokoj);
         }
         if(choice.equals("3")){
 
